@@ -1,0 +1,38 @@
+syntax = "proto2";
+
+package netty;
+
+option java_package="com.abin.lee.im.model.proto";
+option java_outer_classname="MsgBodyProto";
+
+
+
+message MsgBody{
+required int64 userId=1 [default=0];
+required string userName=2 [default='NoKnown'];
+required string passWord=3 [default='NoKnown'];
+required int32 bodyLength=4 [default=0];
+
+enum MessageType{
+WEB=1;
+ANDROID=2;
+IOS=3;
+PLATFORM=4;
+}
+
+optional MessageType messageType=5 [default=PLATFORM];
+repeated string address=6;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

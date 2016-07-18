@@ -1,0 +1,41 @@
+syntax = "proto2";
+
+package netty;
+
+option java_package="com.abin.lee.im.model.proto";
+option java_outer_classname="MsgHeaderProto";
+
+
+
+message MsgHeader{
+required string query=1 [default='abin'];
+optional int32 pageNum=2 [default=1];
+optional int32 pageSize=3 [default=10];
+required int64 userId=4 [default=0];
+required string userName=5 [default='NoKnown'];
+required string passWord=6 [default='NoKnown'];
+required int32 bodyLength=7 [default=0];
+
+enum MessageType{
+WEB=1;
+ANDROID=2;
+IOS=3;
+PLATFORM=4;
+}
+
+optional MessageType messageType=8 [default=PLATFORM];
+repeated string address=9;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
