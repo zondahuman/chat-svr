@@ -23,8 +23,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
-@ComponentScan("com.abin.lee")
+//@Configuration
+//@ComponentScan("com.abin.lee")
 public class GateServer {
     private static Logger LOGGER = LogManager.getLogger(GateServer.class);
 
@@ -43,13 +43,13 @@ public class GateServer {
             bootstrap.group(bossGroup)
                     .channel(NioSocketChannel.class)
                     .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
-                    .option(ChannelOption.SO_BACKLOG, 1024)
                     .option(ChannelOption.SO_KEEPALIVE, true)//  keepalive connect for ever
                     .option(ChannelOption.TCP_NODELAY, false)// nagle algorithm
-//                    .option(ChannelOption.SO_SNDBUF, 10 * 1024)// 1m
-//                    .option(ChannelOption.SO_RCVBUF, 10 * 1024)// 1m
-//                    .option(ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK, 10 * 1024) // 调大写出buffer为512kb
+                    .option(ChannelOption.SO_SNDBUF, 10 * 1024)// 1m
+                    .option(ChannelOption.SO_RCVBUF, 10 * 1024)// 1m
+                    .option(ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK, 100 * 1024) // 调大写出buffer为512kb
                     .handler(new LoggingHandler(LogLevel.INFO))
+                    .option(ChannelOption.SO_BACKLOG, 1024)
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {

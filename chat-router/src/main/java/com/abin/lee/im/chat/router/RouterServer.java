@@ -37,6 +37,7 @@ public class RouterServer {
         NioEventLoopGroup bossGroup = new NioEventLoopGroup(availableCpu, bossNamedThreadFac);
         NioEventLoopGroup workerGroup = new NioEventLoopGroup(availableCpu,workerNamedThreadFac);
         workerGroup.setIoRatio(100);
+        serverBootstrap = new ServerBootstrap();
         try{
 //            ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.ADVANCED);
             serverBootstrap.group(bossGroup, workerGroup)
@@ -45,11 +46,12 @@ public class RouterServer {
                     .option(ChannelOption.SO_BACKLOG, 1024)
                     .option(ChannelOption.SO_KEEPALIVE, true)// keepalive connect for ever
                     .option(ChannelOption.TCP_NODELAY, false)// nagle algorithm
-                    .option(ChannelOption.SO_SNDBUF, 10)// 1m
-                    .option(ChannelOption.SO_RCVBUF, 10)// 1m
+                    .option(ChannelOption.SO_SNDBUF, 1)// bytes
+                    .option(ChannelOption.SO_RCVBUF, 1)// bytes
                     .option(ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK, 256 * 1024) // 调大写出buffer为512kb
                     .handler(new LoggingHandler(LogLevel.DEBUG))
                     .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
+                    .childOption(ChannelOption.SO_RCVBUF, 1)// bytes
                     .childHandler(new ChannelInitializer<SocketChannel>() {
 
                         @Override
